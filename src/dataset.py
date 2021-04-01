@@ -7,9 +7,11 @@ from torch.utils.data import Dataset
 from torchvision import transforms 
 from PIL import Image
 
+from typing import Tuple, Union
+
 class StyleTransferDataset(Dataset):
-    def __init__(self, image_dir="../images/", 
-                transform=transforms.Compose([ 
+    def __init__(self, image_dir: str="../images/", 
+                transform: transforms.Compose=transforms.Compose([ 
                            transforms.Resize((512, 512)),
                            transforms.ToTensor()
                            ])) -> None: 
@@ -27,7 +29,7 @@ class StyleTransferDataset(Dataset):
     def __len__(self) -> str:
         return len(self.content_list)
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx: Union[int, torch.Tensor]) -> Tuple[torch.Tensor, torch.Tensor]:
         if torch.is_tensor(idx):
             idx = idx.tolist()
 

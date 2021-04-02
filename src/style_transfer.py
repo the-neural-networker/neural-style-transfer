@@ -56,7 +56,6 @@ class StyleTransferNet(pl.LightningModule):
         self.x = torch.tensor(acoustics.generator.white(input_shape[1] * input_shape[2] * input_shape[3]).reshape(input_shape), dtype=torch.float32, requires_grad=True)
         self.x = self.x.to(device="cuda")
         self.x = nn.Parameter(self.x)
-        # print(self.x.shape, self.x.dtype)
 
     def forward(self, x):
         conv1_1, conv1_2, out = self.conv1(x)

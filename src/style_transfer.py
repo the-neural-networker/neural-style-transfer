@@ -55,6 +55,7 @@ class StyleTransferNet(pl.LightningModule):
         # white noise image
         self.x = torch.tensor(acoustics.generator.white(input_shape[1] * input_shape[2] * input_shape[3]).reshape(input_shape), dtype=torch.float32, requires_grad=True)
         self.x = self.x.to(device="cuda")
+        self.x = nn.Parameter(self.x)
         # print(self.x.shape, self.x.dtype)
 
     def forward(self, x):
@@ -114,7 +115,7 @@ class StyleTransferNet(pl.LightningModule):
             e += el
         return e
 
-    def total_loss(self, fl, pl, g, a, alpha=1, beta=10**3, weights=[0.2, 0.2, 0.2, 0.2, 0.2]):
+    def total_loss(self, fl, pl, g, a, alpha=1e-3, beta=1, weights=[0.2, 0.2, 0.2, 0.2, 0.2]):
         return alpha * self.content_loss(fl, pl) + beta * self.style_loss(g, a, weights)
 
     def compute_gram_matrix(self, fl):
@@ -125,7 +126,8 @@ class StyleTransferNet(pl.LightningModule):
         return self.x
 
     def configure_optimizers(self):
-        optimizer = optim.LBFGS(self.parameters(), lr=1)
+        # optimizer = optim.LBFGS(self.parameters(), lr=1)
+        optimizer = optim.Adam(self.parameters(), lr=1e-3)
         return optimizer
 
 
@@ -152,6 +154,9 @@ def cli_main():
     # model
     # ------------
     model = StyleTransferNet(in_channels=args.input_channels, out_channels=args.hidden_dim)
+    before = model.get_result()
+    print(before)
+    torch.save(before.detach().to(device="cpu"), "../result/before.pt")
 
     # ------------
     # training
@@ -164,6 +169,7 @@ def cli_main():
     # ------------
     result = model.get_result()
     print(result)
+    torch.save(result.detach().to(device="cpu"), "../result/result.pt")
 
 
 if __name__ == '__main__':

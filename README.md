@@ -28,11 +28,13 @@ cd src
 
 CONTENT_DIR={path to content image}
 STYLE_DIR={path to style image}
+OUTPUT_DIR={path to save result image}
 
 # run module
 python train.py --use_gpu=true --content_dir=${CONTENT_DIR} \
 --style_dir=${STYLE_DIR} --input_image="content" \
---iterations=100 --alpha=1 --beta=1000000 \ 
+--output_dir=${OUTPUT_DIR} --iterations=100 \ 
+--alpha=1 --beta=1000000 \ 
 --style_layer_weight=1.0
 
 ```
@@ -40,7 +42,8 @@ python train.py --use_gpu=true --content_dir=${CONTENT_DIR} \
 ## Results
 <div align="center">
 
-![NST](misc/nst.png)
+![result1](misc/nst.png)
+![result2](misc/result_collage_2.png)
 
 </div>
 

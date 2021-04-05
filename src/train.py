@@ -5,9 +5,7 @@ from argparse import ArgumentParser
 import torch
 from torch import nn
 import torch.nn.functional as F
-from torch.utils.data import DataLoader
 import torch.optim as optim
-from torch.utils.data import random_split
 
 from torchvision import transforms
 from torchvision.models import vgg19

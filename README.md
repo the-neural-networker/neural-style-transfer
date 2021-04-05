@@ -16,49 +16,37 @@ Pytorch implementation of the Neural Style Transfer algorithm. Link to the origi
 First, install dependencies   
 ```bash
 # clone project   
-git clone https://github.com/YourGithubName/deep-learning-project-template
+git clone https://github.com/visualCalculus/neural-style-transfer
 
 # install project   
-cd deep-learning-project-template 
+cd neural-style-transfer
 pip install -e .   
 pip install -r requirements.txt
  ```   
- Next, navigate to any file and run it.   
+ Next, navigate to src folder and run train.py with appropriate content and style image paths.  
  ```bash
 # module folder
-cd project
+cd src
 
-# run module (example: mnist as your main contribution)   
-python lit_classifier_main.py    
-```
+CONTENT_DIR={path to content image}
+STYLE_DIR={path to style image}
 
-## Imports
-This project is setup as a package which means you can now easily import any file into any other file like so:
-```python
-from project.datasets.mnist import mnist
-from project.lit_classifier_main import LitClassifier
-from pytorch_lightning import Trainer
+# run module
+python train.py --use_gpu=true --content_dir=${CONTENT_DIR} \
+--style_dir=${STYLE_DIR} --input_image="content" \
+--iterations=100 --alpha=1 --beta=1000000 \ 
+--style_layer_weight=1.0
 
-# model
-model = LitClassifier()
-
-# data
-train, val, test = mnist()
-
-# train
-trainer = Trainer()
-trainer.fit(model, train, val)
-
-# test using the best model!
-trainer.test(test_dataloaders=test)
 ```
 
 ### Citation   
 ```
-@article{YourName,
-  title={Your Title},
-  author={Your team},
-  journal={Location},
-  year={Year}
+@misc{visualCalculus2021nst,
+  title={neural-style-transfer},
+  author={Tejomay, Abhiroop},
+  publisher={GitHub}
+  journal={GitHub repository},
+  year={2021},
+  howpublished={\url{https://github.com/visualCalculus/neural-style-transfer}}
 }
 ```   

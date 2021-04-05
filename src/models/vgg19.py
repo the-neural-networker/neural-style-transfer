@@ -5,7 +5,7 @@ import torch.nn.functional as F
 from typing import Tuple, Dict, Optional
 
 class Normalization(nn.Module):
-    def __init__(self, mean, std) -> None:
+    def __init__(self, mean: torch.Tensor, std: torch.Tensor) -> None:
         super(Normalization, self).__init__()
         self.mean = mean.view(-1, 1, 1)
         self.std = std.view(-1, 1, 1)
@@ -14,7 +14,7 @@ class Normalization(nn.Module):
         return (x - self.mean) / self.std
 
 class ConvBlock1(nn.Module):
-    def __init__(self, in_channels, out_channels) -> None:
+    def __init__(self, in_channels: int, out_channels: int) -> None:
         super(ConvBlock1, self).__init__()
         self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, padding=1)
         self.relu1 = nn.ReLU(inplace=False)
@@ -30,7 +30,7 @@ class ConvBlock1(nn.Module):
 
 
 class ConvBlock2(nn.Module):
-    def __init__(self, in_channels, out_channels) -> None:
+    def __init__(self, in_channels: int, out_channels: int) -> None:
         super(ConvBlock2, self).__init__()
         self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, padding=1)
         self.relu1 = nn.ReLU(inplace=False)

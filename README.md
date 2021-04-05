@@ -11,7 +11,7 @@
 Pytorch implementation of the Neural Style Transfer algorithm. Link to the original paper: [Gatys et al.](./paper/neural_style_transfer.pdf)
 
 ## How to run   
-First, install dependencies   
+First, install dependencies.   
 ```bash
 # clone project   
 git clone https://github.com/visualCalculus/neural-style-transfer

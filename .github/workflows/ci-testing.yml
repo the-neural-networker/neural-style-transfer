@@ -62,7 +62,7 @@ jobs:
 
     - name: Tests
       run: |
-        coverage run --source src -m py.test --content_dir="/images/content_dir/dancing.jpg" --style_dir="/images/style_dir/picasso.jpg"
+        coverage run --source src -m py.test
 
     - name: Statistics
       if: success()

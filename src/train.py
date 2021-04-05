@@ -25,8 +25,8 @@ def main() -> None:
     # command line args 
     parser = ArgumentParser()
     parser.add_argument("--use_gpu", default=True, type=bool)
-    parser.add_argument("--content_dir", default="../images/content/dancing.jpg", type=str)
-    parser.add_argument("--style_dir", default="../images/style/picasso.jpg", type=str)
+    parser.add_argument("--content_dir", default="./images/content/dancing.jpg", type=str)
+    parser.add_argument("--style_dir", default="./images/style/picasso.jpg", type=str)
     parser.add_argument("--input_image", default="content", type=str)
     parser.add_argument("--iterations", default=100, type=int)
     parser.add_argument("--alpha", default=1, type=int)

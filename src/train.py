@@ -16,8 +16,9 @@ from models.vgg19 import VGG19
 from losses import ContentLoss, StyleLoss
 
 from tqdm import tqdm
+from typing import List, Union
 
-def main():
+def main() -> None:
     # command line args 
     parser = ArgumentParser()
     parser.add_argument("--use_gpu", default=True, type=bool)
@@ -66,7 +67,7 @@ def main():
         style_losses.append(StyleLoss(style_outputs[f"conv{i}"][0], device))
 
     # run style transfer
-    output = train(model, optimizer, content_loss, style_losses, content, style, x,
+    output = train(model, optimizer, content_loss, style_losses, x,
                    iterations=args.iterations, alpha=args.alpha, beta=args.beta, 
                    style_weight=args.style_layer_weight)
     output = output.detach().to("cpu")
@@ -74,7 +75,7 @@ def main():
     # save result
     plt.imsave("../result/result.jpg", output[0].permute(1, 2, 0).numpy())
 
-def image_loader(path, device=torch.device("cuda")):
+def image_loader(path: str, device: torch.device=torch.device("cuda")) -> torch.Tensor:
     """Loads and resizes the image."""
     transform = transforms.Compose([
                     transforms.Resize((512, 512)),
@@ -85,7 +86,7 @@ def image_loader(path, device=torch.device("cuda")):
     img = img.unsqueeze(0).to(device=device)
     return img
 
-def load_vgg19_weights(model, device):
+def load_vgg19_weights(model: nn.Module, device: torch.device) -> nn.Module:
     """Loads VGG19 pretrained weights from ImageNet for style transfer"""
     pretrained_model = vgg19(pretrained=True).features.to(device).eval()
 
@@ -139,8 +140,8 @@ def load_vgg19_weights(model, device):
     return model
 
 
-def train(model, optimizer, content_loss, style_losses, 
-          content, style, x, iterations=100, alpha=1, beta=1000000, style_weight=1):
+def train(model: nn.Module, optimizer: torch.optim, content_loss: ContentLoss, style_losses: List[StyleLoss], 
+          x: torch.Tensor, iterations: int=100, alpha: int=1, beta: int=1000000, style_weight: Union[int, float]=1.0) -> torch.Tensor:
     """Train the neural style transfer algorithm."""
 
     with tqdm(range(iterations)) as iterations:

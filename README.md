@@ -38,9 +38,11 @@ python train.py --use_gpu=true --content_dir=${CONTENT_DIR} \
 ```
 
 ## Results
+<div align="center">
 
-![NST](misc/nst.jpg)
+![NST](misc/nst.png)
 
+</div>
 
 ### Citation   
 ```

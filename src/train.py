@@ -192,17 +192,3 @@ def train(model: nn.Module, optimizer: torch.optim, content_loss: ContentLoss, s
 
 if __name__ == "__main__":
     main()
-
-
-
-        
-
-        
-
-        
-        
-
-
-    
-
-    

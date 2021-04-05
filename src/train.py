@@ -1,3 +1,6 @@
+import os 
+import sys
+sys.path.append(os.path.abspath(os.path.pardir))
 from argparse import ArgumentParser
 import torch
 from torch import nn
@@ -12,8 +15,8 @@ from torchvision.models import vgg19
 from PIL import Image
 import matplotlib.pyplot as plt
 
-from losses import ContentLoss, StyleLoss
-from models.vgg19 import VGG19
+from src.losses import ContentLoss, StyleLoss
+from src.models.vgg19 import VGG19
 
 from tqdm import tqdm
 from typing import List, Union

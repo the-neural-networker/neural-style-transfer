@@ -44,6 +44,7 @@ python train.py --use_gpu=true --content_dir=${CONTENT_DIR} \
 
 ![result1](misc/result_collage.png)
 ![result2](misc/result_collage_2.png)
+![result3](misc/result_collage_3.png)
 
 </div>
 

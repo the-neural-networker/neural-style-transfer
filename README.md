@@ -37,6 +37,11 @@ python train.py --use_gpu=true --content_dir=${CONTENT_DIR} \
 
 ```
 
+## Results
+
+![NST](misc/nst.jpg)
+
+
 ### Citation   
 ```
 @misc{visualCalculus2021nst,

@@ -12,8 +12,8 @@ from torchvision.models import vgg19
 from PIL import Image
 import matplotlib.pyplot as plt
 
-from models.vgg19 import VGG19
 from losses import ContentLoss, StyleLoss
+from models.vgg19 import VGG19
 
 from tqdm import tqdm
 from typing import List, Union

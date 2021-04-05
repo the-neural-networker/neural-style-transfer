@@ -2,17 +2,19 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 
-class Normalization(nn.Module):
-    def __init__(self, mean, std):
-        super(Normalization, self).__init__()
-        self.mean = torch.tensor(mean).view(-1, 1, 1)
-        self.std = torch.tensor(std).view(-1, 1, 1)
+from typing import Tuple, Dict, Optional
 
-    def forward(self, x):
+class Normalization(nn.Module):
+    def __init__(self, mean, std) -> None:
+        super(Normalization, self).__init__()
+        self.mean = mean.view(-1, 1, 1)
+        self.std = std.view(-1, 1, 1)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         return (x - self.mean) / self.std
 
 class ConvBlock1(nn.Module):
-    def __init__(self, in_channels, out_channels):
+    def __init__(self, in_channels, out_channels) -> None:
         super(ConvBlock1, self).__init__()
         self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, padding=1)
         self.relu1 = nn.ReLU(inplace=False)
@@ -20,18 +22,15 @@ class ConvBlock1(nn.Module):
         self.relu2 = nn.ReLU(inplace=False)
         self.max_pool2d = nn.MaxPool2d(kernel_size=2)
 
-    def forward(self, x):
-        # conv1 = torch.relu(self.conv1(x))
+    def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor]:
         conv1 = self.relu1(self.conv1(x))
-        # conv2 = torch.relu(self.conv2(conv1))
         conv2 = self.relu2(self.conv2(conv1))
-        # out = F.max_pool2d(conv2, 2)
         out = self.max_pool2d(conv2)
         return conv1, conv2, out
 
 
 class ConvBlock2(nn.Module):
-    def __init__(self, in_channels, out_channels):
+    def __init__(self, in_channels, out_channels) -> None:
         super(ConvBlock2, self).__init__()
         self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, padding=1)
         self.relu1 = nn.ReLU(inplace=False)
@@ -43,22 +42,18 @@ class ConvBlock2(nn.Module):
         self.relu4 = nn.ReLU(inplace=False)
         self.max_pool2d = nn.MaxPool2d(kernel_size=2)
 
-    def forward(self, x):
-        # conv1 = torch.relu(self.conv1(x))
+    def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor]:
         conv1 = self.relu1(self.conv1(x))
-        # conv2 = torch.relu(self.conv2(conv1))
         conv2 = self.relu2(self.conv2(conv1))
-        # conv3 = torch.relu(self.conv3(conv2))
         conv3 = self.relu3(self.conv3(conv2))
-        # conv4 = torch.relu(self.conv4(conv3))
         conv4 = self.relu4(self.conv4(conv3))
-        # out = F.max_pool2d(conv4, 2)
         out = self.max_pool2d(conv2)
         return conv1, conv2, conv3, conv4, out
 
 
 class VGG19(nn.Module):
-    def __init__(self, in_channels=3, out_channels=64, mean=None, std=None):
+    def __init__(self, in_channels: int=3, out_channels: int=64, 
+                mean: Optional[torch.Tensor]=None, std: Optional[torch.Tensor]=None) -> None:
         super(VGG19, self).__init__()
         self.norm = Normalization(mean=mean, std=std)
         self.conv1 = ConvBlock1(in_channels=in_channels, out_channels=out_channels)
@@ -67,7 +62,7 @@ class VGG19(nn.Module):
         self.conv4 = ConvBlock2(in_channels=out_channels * 4, out_channels=out_channels * 8)
         self.conv5 = ConvBlock2(in_channels=out_channels * 8, out_channels = out_channels * 8)
             
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> Dict[str: torch.Tensor]: 
         x = self.norm(x)
         conv1_1, conv1_2, out = self.conv1(x)
         conv2_1, conv2_2, out = self.conv2(out)

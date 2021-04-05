@@ -62,7 +62,7 @@ class VGG19(nn.Module):
         self.conv4 = ConvBlock2(in_channels=out_channels * 4, out_channels=out_channels * 8)
         self.conv5 = ConvBlock2(in_channels=out_channels * 8, out_channels = out_channels * 8)
             
-    def forward(self, x: torch.Tensor) -> Dict[str: torch.Tensor]: 
+    def forward(self, x: torch.Tensor) -> Dict[str, torch.Tensor]: 
         x = self.norm(x)
         conv1_1, conv1_2, out = self.conv1(x)
         conv2_1, conv2_2, out = self.conv2(out)

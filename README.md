@@ -3,9 +3,7 @@
 
 <div align="center">    
  
-# Neural Style Transfer with Pytorch
-
-![CI testing](https://github.com/PyTorchLightning/deep-learning-project-template/workflows/CI%20testing/badge.svg?branch=master&event=push)
+# Neural Style Transfer with PyTorch
 
 </div>
  

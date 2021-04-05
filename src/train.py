@@ -26,6 +26,7 @@ def main() -> None:
     parser.add_argument("--content_dir", default="../images/content/dancing.jpg", type=str)
     parser.add_argument("--style_dir", default="../images/style/picasso.jpg", type=str)
     parser.add_argument("--input_image", default="content", type=str)
+    parser.add_argument("--output_dir", default="../result/result.jpg", type=str)
     parser.add_argument("--iterations", default=100, type=int)
     parser.add_argument("--alpha", default=1, type=int)
     parser.add_argument("--beta", default=1000000, type=int)
@@ -74,7 +75,7 @@ def main() -> None:
     output = output.detach().to("cpu")
 
     # save result
-    plt.imsave("../result/result.jpg", output[0].permute(1, 2, 0).numpy())
+    plt.imsave(args.output_dir, output[0].permute(1, 2, 0).numpy())
 
 def image_loader(path: str, device: torch.device=torch.device("cuda")) -> torch.Tensor:
     """Loads and resizes the image."""

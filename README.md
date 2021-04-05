@@ -42,7 +42,7 @@ python train.py --use_gpu=true --content_dir=${CONTENT_DIR} \
 ## Results
 <div align="center">
 
-![result1](misc/nst.png)
+![result1](misc/result_collage.png)
 ![result2](misc/result_collage_2.png)
 
 </div>

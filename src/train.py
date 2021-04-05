@@ -17,20 +17,30 @@ from losses import ContentLoss, StyleLoss
 
 from tqdm import tqdm
 
-def main(input_image="content"):
-    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+def main():
+    # command line args 
+    parser = ArgumentParser()
+    parser.add_argument("--use_gpu", default=True, type=bool)
+    parser.add_argument("--content_dir", default="../images/content/dancing.jpg", type=str)
+    parser.add_argument("--style_dir", default="../images/style/picasso.jpg", type=str)
+    parser.add_argument("--input_image", default="content", type=str)
+    parser.add_argument("--iterations", default=100, type=int)
+    parser.add_argument("--alpha", default=1, type=int)
+    parser.add_argument("--beta", default=1000000, type=int)
+    parser.add_argument("--style_layer_weight", default=1.0, type=float)
+    args = parser.parse_args()
+
+    device = torch.device("cuda") if (torch.cuda.is_available() and args.use_gpu) else torch.device("cpu")
     print(f"training on device {device}")
 
     # content and style images
-    content_dir = "../images/content/neckarfront.jpg"
-    style_dir = "../images/style/kandinsky.jpg"
-    content = image_loader(content_dir, device)
-    style = image_loader(style_dir, device)
+    content = image_loader(args.content_dir, device)
+    style = image_loader(args.style_dir, device)
 
     # input image
-    if input_image == "content":
+    if args.input_image == "content":
         x = content.clone()
-    elif input_image == "style":
+    elif args.input_image == "style":
         x = style.clone()
     else:
         x = torch.randn(content.data.size(), device=device)
@@ -41,7 +51,8 @@ def main(input_image="content"):
 
     # vgg19 model
     model = VGG19(mean=mean, std=std).to(device=device)
-    model = load_vgg19_weights(model)
+    model = load_vgg19_weights(model, device)
+    # LBFGS optimizer like in paper
     optimizer = optim.LBFGS([x.requires_grad_()])
 
     # computing content and style representations
@@ -55,12 +66,13 @@ def main(input_image="content"):
         style_losses.append(StyleLoss(style_outputs[f"conv{i}"][0], device))
 
     # run style transfer
-    output = train(model, optimizer, content_loss, style_losses, content, style, x)
+    output = train(model, optimizer, content_loss, style_losses, content, style, x,
+                   iterations=args.iterations, alpha=args.alpha, beta=args.beta, 
+                   style_weight=args.style_layer_weight)
     output = output.detach().to("cpu")
 
     # save result
-    plt.imsave("../result/result.jpg", output[0].permute(1, 2, 0))
-    # torch.save(output.detach().to("cpu"), "../result/result_new.pt")
+    plt.imsave("../result/result.jpg", output[0].permute(1, 2, 0).numpy())
 
 def image_loader(path, device=torch.device("cuda")):
     """Loads and resizes the image."""
@@ -73,9 +85,8 @@ def image_loader(path, device=torch.device("cuda")):
     img = img.unsqueeze(0).to(device=device)
     return img
 
-def load_vgg19_weights(model):
+def load_vgg19_weights(model, device):
     """Loads VGG19 pretrained weights from ImageNet for style transfer"""
-    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     pretrained_model = vgg19(pretrained=True).features.to(device).eval()
 
     matching_keys = {
@@ -129,7 +140,7 @@ def load_vgg19_weights(model):
 
 
 def train(model, optimizer, content_loss, style_losses, 
-          content, style, x, iterations=100, alpha=1000, beta=1000000, style_weight=1):
+          content, style, x, iterations=100, alpha=1, beta=1000000, style_weight=1):
     """Train the neural style transfer algorithm."""
 
     with tqdm(range(iterations)) as iterations:
@@ -176,9 +187,7 @@ def train(model, optimizer, content_loss, style_losses,
 
 
 if __name__ == "__main__":
-    # choose input image
-    input_image = "content"
-    main(input_image)
+    main()
 
 
 

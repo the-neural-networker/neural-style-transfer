@@ -18,7 +18,6 @@ git clone https://github.com/visualCalculus/neural-style-transfer
 
 # install project   
 cd neural-style-transfer
-pip install -e .   
 pip install -r requirements.txt
  ```   
  Next, navigate to src folder and run train.py with appropriate content and style image paths.  

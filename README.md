@@ -1,6 +1,3 @@
-
----
-
 <div align="center">    
  
 # Neural Style Transfer with PyTorch
@@ -8,7 +5,7 @@
 </div>
  
 ## Description   
-Pytorch implementation of the Neural Style Transfer algorithm. Link to the original paper: [Gatys et al.](./paper/neural_style_transfer.pdf)
+Pytorch implementation of the Neural Style Transfer algorithm. Link to the original paper by [Gatys et al.](./paper/neural_style_transfer.pdf)
 
 ## How to run   
 First, install dependencies (a new python virtual environment is recommended).   

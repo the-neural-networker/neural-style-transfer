@@ -99,7 +99,7 @@ def image_loader(path: str, device: torch.device=torch.device("cuda")) -> torch.
 
 def load_vgg19_weights(model: nn.Module, device: torch.device) -> nn.Module:
     """
-    Loads VGG19 pretrained weights from ImageNet for style transfe.
+    Loads VGG19 pretrained weights from ImageNet for style transfer.
     
     Args:
         model (nn.Module): VGG19 feature module with randomized weights.

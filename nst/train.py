@@ -170,12 +170,13 @@ def train(model: nn.Module, optimizer: torch.optim, content_loss: ContentLoss, s
         model (nn.Module): The VGG19 feature extractor for training the style transfer algorithm.
         optimizer (torch.optim): The optimization module to use.
         content_loss (ContentLoss): The content loss to preserve the content representation during style transfer.
-        style_losses (List[StyleLoss]): A list of style loss objects to preserve the style representation across different layers during style transfer.
+        style_losses (List[StyleLoss]): A list of style loss objects to preserve the style representation across 
+                                        different layers during style transfer.
         x (torch.Tensor): The input image for style transfer.
         iterations (int): Number of iterations to run.
         alpha (int): The weight given to content loss while computing the total loss.
         beta (int): The weight given to style loss while computing the total loss.
-        style_weight (float): The weight given to style loss of each layer while computing total style loss.
+        style_weight Union[int, float]: The weight given to style loss of each layer while computing total style loss.
 
     Returns:
         x (torch.Tensor): The input image with the content and style transfered.

@@ -13,8 +13,8 @@ from torchvision.models import vgg19
 from PIL import Image
 import matplotlib.pyplot as plt
 
-from src.models.vgg19 import VGG19
-from src.losses import ContentLoss, StyleLoss
+from nst.models.vgg19 import VGG19
+from nst.losses import ContentLoss, StyleLoss
 
 from tqdm import tqdm
 from typing import List, Union

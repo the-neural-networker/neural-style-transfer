@@ -78,7 +78,16 @@ def main() -> None:
     plt.imsave(args.output_dir, output[0].permute(1, 2, 0).numpy())
 
 def image_loader(path: str, device: torch.device=torch.device("cuda")) -> torch.Tensor:
-    """Loads and resizes the image."""
+    """
+    Loads and resizes the image.
+
+    Args:
+        path (str): Path to the image.
+        device (torch.device): device to load the image in.
+
+    Returns:
+        img (torch.Tensor): Loaded image as torch.Tensor.
+    """
     transform = transforms.Compose([
                     transforms.Resize((512, 512)),
                     transforms.ToTensor(),
@@ -89,7 +98,16 @@ def image_loader(path: str, device: torch.device=torch.device("cuda")) -> torch.
     return img
 
 def load_vgg19_weights(model: nn.Module, device: torch.device) -> nn.Module:
-    """Loads VGG19 pretrained weights from ImageNet for style transfer"""
+    """
+    Loads VGG19 pretrained weights from ImageNet for style transfe.
+    
+    Args:
+        model (nn.Module): VGG19 feature module with randomized weights.
+        device (torch.device): The device to load the model in. 
+
+    Returns:
+        model (nn.Module): VGG19 module with pretrained ImageNet weights loaded.
+    """
     pretrained_model = vgg19(pretrained=True).features.to(device).eval()
 
     matching_keys = {
@@ -144,7 +162,23 @@ def load_vgg19_weights(model: nn.Module, device: torch.device) -> nn.Module:
 
 def train(model: nn.Module, optimizer: torch.optim, content_loss: ContentLoss, style_losses: List[StyleLoss], 
           x: torch.Tensor, iterations: int=100, alpha: int=1, beta: int=1000000, style_weight: Union[int, float]=1.0) -> torch.Tensor:
-    """Train the neural style transfer algorithm."""
+    """
+    Train the neural style transfer algorithm.
+
+    Args:
+        model (nn.Module): The VGG19 feature extractor for training the style transfer algorithm.
+        optimizer (torch.optim): The optimization module to use.
+        content_loss (ContentLoss): The content loss to preserve the content representation during style transfer.
+        style_losses (List[StyleLoss]): A list of style loss objects to preserve the style representation across different layers during style transfer.
+        x (torch.Tensor): The input image for style transfer.
+        iterations (int): Number of iterations up to which the algorithm must run.
+        alpha (int): The weight given to content loss while computing the total loss.
+        beta (int): The weight given to style loss while computing the total loss.
+        style_weight (float): The weight given to style loss of each layer while computing total style loss.
+
+    Returns:
+        x (torch.Tensor): The input image with the content and style transfered.
+    """
 
     with tqdm(range(iterations)) as iterations:
         for iteration in iterations:

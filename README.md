@@ -11,19 +11,20 @@
 Pytorch implementation of the Neural Style Transfer algorithm. Link to the original paper: [Gatys et al.](./paper/neural_style_transfer.pdf)
 
 ## How to run   
-First, install dependencies.   
+First, install dependencies (a new python virtual environment is recommended).   
 ```bash
 # clone project   
 git clone https://github.com/visualCalculus/neural-style-transfer
 
 # install project   
 cd neural-style-transfer
+pip install -e .
 pip install -r requirements.txt
  ```   
  Next, navigate to src folder and run train.py with appropriate content and style image paths.  
  ```bash
 # module folder
-cd src
+cd nst
 
 CONTENT_DIR={path to content image}
 STYLE_DIR={path to style image}

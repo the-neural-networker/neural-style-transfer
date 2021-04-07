@@ -16,6 +16,7 @@ class Normalization(nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return (x - self.mean) / self.std
 
+
 class ConvBlock1(nn.Module):
     """
     Convolution block for VGG19 [conv2d, conv2d, maxpool2d].

@@ -2,6 +2,7 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.pardir))
 from argparse import ArgumentParser
+
 import torch
 from torch import nn
 import torch.nn.functional as F
@@ -171,7 +172,7 @@ def train(model: nn.Module, optimizer: torch.optim, content_loss: ContentLoss, s
         content_loss (ContentLoss): The content loss to preserve the content representation during style transfer.
         style_losses (List[StyleLoss]): A list of style loss objects to preserve the style representation across different layers during style transfer.
         x (torch.Tensor): The input image for style transfer.
-        iterations (int): Number of iterations up to which the algorithm must run.
+        iterations (int): Number of iterations to run.
         alpha (int): The weight given to content loss while computing the total loss.
         beta (int): The weight given to style loss while computing the total loss.
         style_weight (float): The weight given to style loss of each layer while computing total style loss.

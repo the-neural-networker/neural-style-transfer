@@ -18,7 +18,7 @@ cd neural-style-transfer
 pip install -e .
 pip install -r requirements.txt
  ```   
- Next, navigate to src folder and run train.py with appropriate content and style image paths.  
+ Next, navigate to nst folder and run train.py with appropriate content and style image paths.  
  ```bash
 # module folder
 cd nst

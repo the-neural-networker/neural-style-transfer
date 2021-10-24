@@ -3,4 +3,4 @@ torchvision == 0.8.0
 numpy == 1.19.5
 matplotlib == 3.3.4
 tqdm == 4.59.0 
-pillow == 8.2.0
+pillow == 8.3.2
